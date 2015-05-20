@@ -37,41 +37,26 @@ to denote a portion of the path of the import.
 There are three rules to construct an import URI from a library identifier:
 
   * **dart imports**: libraries identifiers of the form `dart.name` are
-    interpreted as the URI `dart:name`. For example:
+    interpreted as the URI `dart:name`.
+  * **pacakge imports**: dotted names that do not start with `dart` are
+    interepreted as a `package:` URL, where the first identifier is the package
+    name, and each identifier thereafter is a segment in the path to the file
+    beign imported.
+  * **default package imports**: for short, a single identifier corresponds to
+    the default library in a package with that name.
+
+The three imports below illustrates each of these rules respectively:
 ```dart
-import dart.async;
-```
-is equivalent to:
-```dart
-import 'dart:async';
+import dart.async;  // is equivalent to: import 'dart:async';
+import foo.src.bar; // is equivalent to: import 'package:foo/src/bar.dart';
+import foo;         // is equivalent to: import 'package:foo/foo.dart'
 ```
 
-  * **default package imports**: a single token identifier imports the default library
-    in a package. For example:
-```dart
-import foo;
-```
-is equivalent to:
-```dart
-import 'package:foo/foo.dart'
-```
-
-  * **generalized pacakge imports**: other multi-token identifiers that do not
-    start with `dart`, are interepreted as a `package:` URL, where each
-    identifier is a segment in the path to the file beign imported. For example:
-```dart
-import foo.src.bar;
-```
-is equivalent to:
-```dart
-import 'package:foo/src/bar.dart';
-```
 
 ## Spec changes
 
-Changes would be similar in the many directives (export, import, part). We
-change the `uri` token, for a `uriOrLibraryIdentifier`. For example, imports are
-changed from:
+We simply change the syntax replacing `uri` for a `uriOrLibraryIdentifier` in
+imports, exports, and part directives. For example, imports are changed from:
 ```dart
 importSpecification:  import uri (as identifier)? combinator* ';'
                    |   import uri deferred as identifier combinator* ';'
@@ -92,24 +77,27 @@ uriOrLibraryIdentifier: uri
 
 Some other alternatives we've considered.
 
-### An alternative syntax
+### The 'name:path' syntax
 
-Use `:` to split the package name from the path. For example:
+Under this syntax the package name is explicit. If not given, it defaults to the
+current package. We use `:` to split the package name from the path. For
+example:
 
 ```dart
-import foo:bar;  // equivalent to 'package:foo/bar.dart'
-import bar;      // equivalent to 'package:self_package/bar.dart' (where
-                 // self_package is the current package name)
-import dart:async;
+import foo:src.bar;  // equivalent to import 'package:foo/src/bar.dart'
+import src.bar;      // equivalent to import 'package:self_package/src/bar.dart'
+                     // (where self_package is the current package name)
+import dart:async;   // same as import 'dart:async'
 ```
 
-### An alternative resolution scheme
+### The lookup resolution approach
 
-Rather than using a set of rules to map our syntax to URIs, we could instead
-enlarge the [package spec](https://github.com/lrhn/dep-pkgspec) to map
-individual import identifiers to actual URIs.
+Rather than using rules to translate our syntax to URIs, we would instead
+add to the [package spec](https://github.com/lrhn/dep-pkgspec) a map
+of individual import identifiers to actual URIs.
 
-The advantages is that this could be used outside of the context of packages as
-well.
+The advantages of this alternative is that this could be used outside of the
+context of packages as well.
 
+[DEP-resolved-part-of]: https://github.com/sigmundch/DEP-resovled-part-of/blob/master/proposal.md
 [@sigmundch]: https://github.com/sigmundch
