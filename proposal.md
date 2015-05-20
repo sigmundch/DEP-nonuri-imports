@@ -96,8 +96,14 @@ Rather than using rules to translate our syntax to URIs, we would instead
 add to the [package spec](https://github.com/lrhn/dep-pkgspec) a map
 of individual import identifiers to actual URIs.
 
-The advantages of this alternative is that this could be used outside of the
-context of packages as well.
+The advantages of this alternative are:
+* this decouples library names from library locations.
+* the new import syntax could be used for normal imports, not just in the
+  context of a package.
+
+The main disadvantages is that the import structure may not correspond naturally
+to the layout of the code. So we would need to rely on conventions and style
+guides to keep the ecosystem clear and homogeneous.
 
 [DEP-resolved-part-of]: https://github.com/sigmundch/DEP-resovled-part-of/blob/master/proposal.md
 [@sigmundch]: https://github.com/sigmundch
