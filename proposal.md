@@ -105,5 +105,5 @@ The main disadvantages is that the import structure may not correspond naturally
 to the layout of the code. So we would need to rely on conventions and style
 guides to keep the ecosystem clear and homogeneous.
 
-[DEP-resolved-part-of]: https://github.com/sigmundch/DEP-resovled-part-of/blob/master/proposal.md
+[DEP-resolved-part-of]: https://github.com/sigmundch/DEP-resolved-part-of/blob/master/proposal.md
 [@sigmundch]: https://github.com/sigmundch
