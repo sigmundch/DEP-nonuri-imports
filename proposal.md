@@ -16,6 +16,8 @@ The URI-based syntax continues to be supported. In fact, for some kind of
 imports, like relative imports, it continues to be the only way users can
 express them.
 
+For additional background, see this [thread in core-dev](https://groups.google.com/a/dartlang.org/forum/#!topic/core-dev/Mtii4OONYkQ).
+
 ## Related proposal
 
 This proposal complements another [concurrent proposal][DEP-resolved-part-of]
