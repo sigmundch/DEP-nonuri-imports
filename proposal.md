@@ -41,9 +41,9 @@ There are three rules to construct an import URI from a library identifier:
   * **dart imports**: libraries identifiers of the form `dart.name` are
     interpreted as the URI `dart:name`.
   * **package imports**: dotted names that do not start with `dart` are
-    interepreted as a `package:` URL, where the first identifier is the package
+    interpreted as a `package:` URL, where the first identifier is the package
     name, and each identifier thereafter is a segment in the path to the file
-    beign imported.
+    being imported.
   * **default package imports**: for short, a single identifier corresponds to
     the default library in a package with that name.
 
