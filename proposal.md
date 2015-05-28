@@ -58,7 +58,9 @@ import foo;         // is equivalent to: import 'package:foo/foo.dart'
 ## Spec changes
 
 We simply change the syntax replacing `uri` for a `uriOrLibraryIdentifier` in
-imports, exports, and part directives. For example, imports are changed from:
+imports, exports, and part directives. For example, imports in Section **18.1**
+are changed from:
+
 ```dart
 importSpecification:  import uri (as identifier)? combinator* ';'
                    |   import uri deferred as identifier combinator* ';'
@@ -74,6 +76,24 @@ uriOrLibraryIdentifier: uri
                       | identifier ('.' identifier)* ';'
                       ;
 ```
+
+And the text is changed as follows (edit removals are denoted as
+~~strikethrough~~, added text is denoted in **bold**):
+
+> An import specivies ~~a URI x~~ where the declaration of an imported library
+> is to be found. **This can be a URI x which resolves to the location of the
+> imported library, or a library identifier which can be translated as a URI
+> according to these rules**:
+>  * **an identifier with a single identifier (`id1`) is expanded as
+>    an identifier with the same identifier written twice (`id1.id1`).**
+>  * **library identifiers of the form `dart.id1`, where `dart` is the first
+>    identifier, are equivalent to use the URI `dart:id1`.**
+>  * **an identifier `id1.id2...idn` with two or more identifiers, is equivalent
+>    to an package import URI where each identifier is a segment in the path:
+>    `package:id1/id2/.../idn.dart`.**
+
+The same change is needed in the section **18.2** describing exports,
+and **18.3** describing parts.
 
 ## Alternatives
 
@@ -106,6 +126,23 @@ The advantages of this alternative are:
 The main disadvantages is that the import structure may not correspond naturally
 to the layout of the code. So we would need to rely on conventions and style
 guides to keep the ecosystem clear and homogeneous.
+
+### Alternative spec modification
+
+Instead of specifying our changes in each section describing imports, exports,
+and parts. We could instead modify the spec in describing URIs in Section
+**18.5**. The proposed changes would be:
+
+```dart
+uri:
+   stringLiteral
+  | identifier (. identifier)*
+```
+
+Where:
+  * `id` is sugar for `id.id`, which is sugar for `'package:id/id.dart'`
+  * `dart.id` is sugar for `'dart:id'`
+  * `id1.id2.id3` is sugar for `package:id1/id2/id3.dart`.
 
 [DEP-resolved-part-of]: https://github.com/sigmundch/DEP-resolved-part-of/blob/master/proposal.md
 [@sigmundch]: https://github.com/sigmundch
