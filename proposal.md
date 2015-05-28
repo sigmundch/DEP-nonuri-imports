@@ -36,7 +36,7 @@ identifier instead of a string in import, export, and part directives.
 The library identifier is a dotted name, where each segment of the name is used
 to denote a portion of the path of the import.
 
-There are three rules to construct an import URI from a library identifier:
+There are two basic rules to construct an import URI from a library identifier:
 
   * **dart imports**: libraries identifiers of the form `dart.name` are
     interpreted as the URI `dart:name`.
@@ -44,10 +44,10 @@ There are three rules to construct an import URI from a library identifier:
     interpreted as a `package:` URL, where the first identifier is the package
     name, and each identifier thereafter is a segment in the path to the file
     being imported.
-  * **default package imports**: for short, a single identifier corresponds to
-    the default library in a package with that name.
 
-The three imports below illustrates each of these rules respectively:
+For convenience, a single identifier `id` is sugar for `id.id`.
+
+The following import examples illustrate the semantics:
 ```dart
 import dart.async;  // is equivalent to: import 'dart:async';
 import foo.src.bar; // is equivalent to: import 'package:foo/src/bar.dart';
