@@ -106,8 +106,9 @@ current package. We use `:` to split the package name from the path. For
 example:
 
 ```dart
+import foo;          // equivalent to import 'package:foo/foo.dart'
 import foo:src.bar;  // equivalent to import 'package:foo/src/bar.dart'
-import src.bar;      // equivalent to import 'package:self_package/src/bar.dart'
+import :src.bar;     // equivalent to import 'package:self_package/src/bar.dart'
                      // (where self_package is the current package name)
 import dart:async;   // same as import 'dart:async'
 ```
